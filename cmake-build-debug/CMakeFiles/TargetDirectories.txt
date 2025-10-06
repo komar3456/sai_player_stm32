@@ -1,0 +1,4 @@
+C:/Users/Миша/CLionProjects/st32_template/cmake-build-debug/CMakeFiles/SAI_CM7.dir
+C:/Users/Миша/CLionProjects/st32_template/cmake-build-debug/CMakeFiles/SAI_CM4.dir
+C:/Users/Миша/CLionProjects/st32_template/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Миша/CLionProjects/st32_template/cmake-build-debug/CMakeFiles/rebuild_cache.dir
