@@ -43,7 +43,11 @@ add_executable(SAI_CM7
         system_stm32h7xx_dualcore_boot_cm4_cm7.c
         drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c
         drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c
+
 )
+
+target_sources(SAI_CM7 PRIVATE CM7/Src/song_30_raw.o)
+
 set(PDM_LIB ${CMAKE_SOURCE_DIR}/CM7/Lib/libPDMFilter_CM7_GCC_wc32.a)
 # Компиляция только своих флагов, тулчейн уже добавляет остальное
 target_compile_definitions(SAI_CM7 PRIVATE ${CM7_DEFS} )
@@ -114,6 +118,7 @@ add_executable(SAI_CM4
         drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
         drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c
         drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c
+
 )
 
 target_compile_definitions(SAI_CM4 PRIVATE ${CM4_DEFS})

@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 /** @addtogroup STM32H7xx_HAL_Examples
   * @{
   */
@@ -35,6 +34,10 @@ typedef enum {
   BUFFER_OFFSET_HALF,
   BUFFER_OFFSET_FULL,
 } BUFFER_StateTypeDef;
+extern const uint8_t _binary_song_30_raw_start;
+extern const uint8_t _binary_song_30_raw_end;
+
+const uint8_t *audio_data = &_binary_song_30_raw_start;
 
 /* Private define ------------------------------------------------------------*/
 #define AUDIO_FREQUENCY       SAI_AUDIO_FREQUENCY_16K
@@ -92,17 +95,27 @@ static void AUDIO_IN_PDMToPCM_Init(uint32_t AudioFreq, uint32_t ChannelNumber);
 static void AUDIO_IN_PDMToPCM(uint16_t *PDMBuf, uint16_t *PCMBuf, uint32_t ChannelNumber);
 static void CPU_CACHE_Enable(void);
 // uint16_t audioPcmBuf[AUDIO_BUFFER_SIZE];
-
-void FillAudioBuffer(void)
+int16_t audioBuf[AUDIO_BUFFER_SIZE];
+void GenerateTone(void)
 {
   for (int i = 0; i < AUDIO_BUFFER_SIZE; i++)
   {
-    // Генерация простого синуса для теста
-    audioPcmBuf[i] = (uint16_t)(3000 * sinf(2.0f * 3.14159f * 440.0f * i / 16000.0f));
+    float t = (float)i / 16.0f; // частота примерно 1 кГц при Fs=16кГц
+    audioBuf[i] = (int16_t)(32767 * sinf(2 * M_PI * 1000.0f * t / 16000.0f));
   }
 }
-/* Private functions ---------------------------------------------------------*/
 
+/* Private functions ---------------------------------------------------------*/
+volatile uint32_t bufIndex = 0;
+
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
+{
+  // Передаем следующий элемент в FIFO
+  bufIndex++;
+  if(bufIndex >= AUDIO_BUFFER_SIZE) bufIndex = 0;
+
+  hsai->Instance->DR = audioPcmBuf[bufIndex];
+}
 /**
   * @brief  Main program
   * @param  None
@@ -110,77 +123,41 @@ void FillAudioBuffer(void)
   */
 int main(void)
 {
-  /* System Init, System clock, voltage scaling and L1-Cache configuration are done by CPU1 (Cortex-M7)
-     in the meantime Domain D2 is put in STOP mode(Cortex-M4 in deep-sleep)
-  */
 
-  /* Enable the CPU Cache */
-  CPU_CACHE_Enable();
-
-  /* STM32H7xx HAL library initialization:
-       - Systick timer is configured by default as source of time base, but user
-         can eventually implement his proper time base source (a general purpose
-         timer for example or other time source), keeping in mind that Time base
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
   HAL_Init();
-
-  /* Configure the system clock to 400 MHz */
   SystemClock_Config();
-
-  /* When system initialization is finished, Cortex-M7 could wakeup (when needed) the Cortex-M4  by means of
-     HSEM notification or by any D2 wakeup source (SEV,EXTI..)   */
-
-  /* Configure LED1 */
-  BSP_LED_Init(LED1);
-
-  /* Configure LED2 */
-  BSP_LED_Init(LED2);
-
-  /* Initialize playback */
+  size_t audio_size = (size_t)(&_binary_song_30_raw_end - &_binary_song_30_raw_start);
   Playback_Init();
   WM8994_Init_t codec_init;
-
   codec_init.Resolution   = 16;
-
-  /* Fill codec_init structure */
   codec_init.Frequency    = 16000;
   codec_init.InputDevice  = WM8994_IN_NONE;
   codec_init.OutputDevice = AUDIO_OUT_DEVICE_HEADPHONE;
+  codec_init.Volume       = VOLUME_OUT_CONVERT(70);
 
-  /* Convert volume before sending to the codec */
-  codec_init.Volume       = VOLUME_OUT_CONVERT(60);
-
-  /* Start the playback */
-  if(Audio_Drv->Init(Audio_CompObj, &codec_init) != 0)
-  {
+  if (Audio_Drv->Init(Audio_CompObj, &codec_init) != 0)
     Error_Handler();
-  }
 
-  /* Start the playback */
-  if(Audio_Drv->Play(Audio_CompObj) < 0)
+  Audio_Drv->Play(Audio_CompObj);
+
+  GenerateTone();
+
+  // включаем SAI
+  __HAL_SAI_ENABLE(&SaiOutputHandle);
+
+  int16_t *pcm = (int16_t *)_binary_song_30_raw_start;
+  size_t samples = audio_size ; // 16 бит = 2 байта
+  int16_t *audioBuf16 = (int16_t*)_binary_song_30_raw_start;
+  while (1)
   {
-    Error_Handler();
+    for (size_t i = 0; i < samples; i += 1) // по два сэмпла: L + R
+    {
+      while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_FULL);
+
+      SaiOutputHandle.Instance->DR = (uint16_t)audioBuf16[i];
+    }
   }
 
-  /* Start the PDM data reception process */
-  if(HAL_OK != HAL_SAI_Transmit_DMA(&SaiOutputHandle, (uint8_t *)audioPcmBuf, AUDIO_BUFFER_SIZE))
-  {
-    Error_Handler();
-  }
-
-  FillAudioBuffer();
-
-
-  // Главный цикл — ничего не делаем, DMA работает в фоне
-  while(1)
-  {
-    BSP_LED_Toggle(LED1);
-    HAL_Delay(500);
-  }
 }
 
 /**
@@ -351,23 +328,24 @@ static void Playback_Init(void)
   SaiOutputHandle.Init.Synchro        = SAI_ASYNCHRONOUS;
   SaiOutputHandle.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
   SaiOutputHandle.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
-  SaiOutputHandle.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  SaiOutputHandle.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_FULL;
   SaiOutputHandle.Init.AudioFrequency = AUDIO_FREQUENCY;
   SaiOutputHandle.Init.Protocol       = SAI_FREE_PROTOCOL;
   SaiOutputHandle.Init.DataSize       = SAI_DATASIZE_16;
-  SaiOutputHandle.Init.FirstBit       = SAI_FIRSTBIT_MSB;
+  SaiOutputHandle.Init.FirstBit       = SAI_FIRSTBIT_LSB;
   SaiOutputHandle.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
+  SaiOutputHandle.Init.MonoStereoMode = SAI_STEREOMODE;
 
-  SaiOutputHandle.FrameInit.FrameLength       = 128;
-  SaiOutputHandle.FrameInit.ActiveFrameLength = 64;
+  SaiOutputHandle.FrameInit.FrameLength       = 32;
+  SaiOutputHandle.FrameInit.ActiveFrameLength = 16;
   SaiOutputHandle.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
   SaiOutputHandle.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
   SaiOutputHandle.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
 
   SaiOutputHandle.SlotInit.FirstBitOffset = 0;
-  SaiOutputHandle.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
-  SaiOutputHandle.SlotInit.SlotNumber     = 4;
-  SaiOutputHandle.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_2);
+  SaiOutputHandle.SlotInit.SlotSize       = SAI_SLOTSIZE_16B;
+  SaiOutputHandle.SlotInit.SlotNumber     = 2;
+  SaiOutputHandle.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1);
 
   /* DeInit SAI PCM input */
   HAL_SAI_DeInit(&SaiOutputHandle);

@@ -83,8 +83,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/\u041c\u0438\u0448\u0430/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-l8ngli"
-      binary: "C:/Users/\u041c\u0438\u0448\u0430/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-l8ngli"
+      source: "C:/Users/\u041c\u0438\u0448\u0430/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-s4qlws"
+      binary: "C:/Users/\u041c\u0438\u0448\u0430/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-s4qlws"
     cmakeVariables:
       CMAKE_C_FLAGS: "  -Wall -fdata-sections -ffunction-sections -lm  -Wall -fdata-sections -ffunction-sections -lm"
       CMAKE_C_FLAGS_DEBUG: "-O0 -g3"
@@ -93,10 +93,10 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Миша/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-l8ngli'
+        Change Dir: 'C:/Users/Миша/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-s4qlws'
         
-        Run Build Command(s): C:/ST/STM32CubeCLT_1.19.0/Ninja/bin/ninja.exe -v cmTC_8f4ba
-        [1/2] C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe   -Wall -fdata-sections -ffunction-sections -lm  -Wall -fdata-sections -ffunction-sections -lm  -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj -c C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): C:/ST/STM32CubeCLT_1.19.0/Ninja/bin/ninja.exe -v cmTC_4c675
+        [1/2] C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe   -Wall -fdata-sections -ffunction-sections -lm  -Wall -fdata-sections -ffunction-sections -lm  -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj -c C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe
         Target: arm-none-eabi
@@ -104,8 +104,8 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 13.3.1 20240614 (GNU Tools for STM32 13.3.rel1.20240926-1715) 
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/'
-         C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/cc1.exe -quiet -v -iprefix C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../lib/gcc/arm-none-eabi/13.3.1/ -isysroot C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_8f4ba.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -Wall -version -fdiagnostics-color=always -fdata-sections -ffunction-sections -o C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccxGGy81.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/'
+         C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/cc1.exe -quiet -v -iprefix C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../lib/gcc/arm-none-eabi/13.3.1/ -isysroot C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4c675.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -Wall -version -fdiagnostics-color=always -fdata-sections -ffunction-sections -o C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccVuAcSH.s
         GNU C17 (GNU Tools for STM32 13.3.rel1.20240926-1715) version 13.3.1 20240614 (arm-none-eabi)
         	compiled by GNU C version 7.3-win32 20180312, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
         
@@ -122,13 +122,13 @@ events:
          C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/lib/gcc/../../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/include
         End of search list.
         Compiler executable checksum: ff0140b734b22faecf673fec3a6a923f
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/'
-         C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccxGGy81.s
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/'
+         C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccVuAcSH.s
         GNU assembler version 2.42.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 13.3.rel1.20240926-1715) 2.42.0.20240614
         COMPILER_PATH=C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/
         LIBRARY_PATH=C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/;C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/
-        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.'\x0d
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\ST\\STM32CubeCLT_1.19.0\\CMake\\bin\\cmake.exe -E rm -f libcmTC_8f4ba.a && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ar.exe qc libcmTC_8f4ba.a  CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ranlib.exe libcmTC_8f4ba.a && cd ."
+        COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\ST\\STM32CubeCLT_1.19.0\\CMake\\bin\\cmake.exe -E rm -f libcmTC_4c675.a && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ar.exe qc libcmTC_4c675.a  CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ranlib.exe libcmTC_4c675.a && cd ."
         
       exitCode: 0
   -
@@ -166,10 +166,10 @@ events:
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(arm-none-eabi-g\\+\\+\\.exe|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: 'C:/Users/Миша/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-l8ngli']
+        ignore line: [Change Dir: 'C:/Users/Миша/CLionProjects/st32_template/cmake-build-release-arm-none-eabi-gcc/CMakeFiles/CMakeScratch/TryCompile-s4qlws']
         ignore line: []
-        ignore line: [Run Build Command(s): C:/ST/STM32CubeCLT_1.19.0/Ninja/bin/ninja.exe -v cmTC_8f4ba]
-        ignore line: [[1/2] C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe   -Wall -fdata-sections -ffunction-sections -lm  -Wall -fdata-sections -ffunction-sections -lm  -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj -c C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): C:/ST/STM32CubeCLT_1.19.0/Ninja/bin/ninja.exe -v cmTC_4c675]
+        ignore line: [[1/2] C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe   -Wall -fdata-sections -ffunction-sections -lm  -Wall -fdata-sections -ffunction-sections -lm  -fdiagnostics-color=always   -v -o CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj -c C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe]
         ignore line: [Target: arm-none-eabi]
@@ -177,8 +177,8 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 13.3.1 20240614 (GNU Tools for STM32 13.3.rel1.20240926-1715) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/']
-        ignore line: [ C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/cc1.exe -quiet -v -iprefix C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../lib/gcc/arm-none-eabi/13.3.1/ -isysroot C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_8f4ba.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -Wall -version -fdiagnostics-color=always -fdata-sections -ffunction-sections -o C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccxGGy81.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/']
+        ignore line: [ C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/cc1.exe -quiet -v -iprefix C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../lib/gcc/arm-none-eabi/13.3.1/ -isysroot C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\../arm-none-eabi -D__USES_INITFINI__ C:/ST/STM32CubeCLT_1.19.0/CMake/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4c675.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=arm7tdmi -mfloat-abi=soft -marm -mlibarch=armv4t -march=armv4t -Wall -version -fdiagnostics-color=always -fdata-sections -ffunction-sections -o C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccVuAcSH.s]
         ignore line: [GNU C17 (GNU Tools for STM32 13.3.rel1.20240926-1715) version 13.3.1 20240614 (arm-none-eabi)]
         ignore line: [	compiled by GNU C version 7.3-win32 20180312  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
         ignore line: []
@@ -195,8 +195,8 @@ events:
         ignore line: [ C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/lib/gcc/../../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: ff0140b734b22faecf673fec3a6a923f]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/']
-        ignore line: [ C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccxGGy81.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/']
+        ignore line: [ C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv4t -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj C:\\Users\\CA81~1\\AppData\\Local\\Temp\\ccVuAcSH.s]
         ignore line: [GNU assembler version 2.42.0 (arm-none-eabi) using BFD version (GNU Tools for STM32 13.3.rel1.20240926-1715) 2.42.0.20240614]
         ignore line: [COMPILER_PATH=C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/]
         ignore line: [C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/]
@@ -205,8 +205,8 @@ events:
         ignore line: [C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/]
         ignore line: [C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/]
         ignore line: [C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/../arm-none-eabi/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.'\x0d]
-        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\ST\\STM32CubeCLT_1.19.0\\CMake\\bin\\cmake.exe -E rm -f libcmTC_8f4ba.a && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ar.exe qc libcmTC_8f4ba.a  CMakeFiles/cmTC_8f4ba.dir/CMakeCCompilerABI.c.obj && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ranlib.exe libcmTC_8f4ba.a && cd ."]
+        ignore line: [COLLECT_GCC_OPTIONS='-fdiagnostics-color=always' '-Wall' '-fdata-sections' '-ffunction-sections' '-v' '-o' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj' '-c' '-mcpu=arm7tdmi' '-mfloat-abi=soft' '-marm' '-mlibarch=armv4t' '-march=armv4t' '-dumpdir' 'CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\ST\\STM32CubeCLT_1.19.0\\CMake\\bin\\cmake.exe -E rm -f libcmTC_4c675.a && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ar.exe qc libcmTC_4c675.a  CMakeFiles/cmTC_4c675.dir/CMakeCCompilerABI.c.obj && C:\\ST\\STM32CubeCLT_1.19.0\\GNU-tools-for-STM32\\bin\\arm-none-eabi-ranlib.exe libcmTC_4c675.a && cd ."]
         ignore line: []
         ignore line: []
         implicit libs: []

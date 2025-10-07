@@ -1645,80 +1645,66 @@ HAL_StatusTypeDef HAL_SAI_Abort(SAI_HandleTypeDef *hsai)
   */
 HAL_StatusTypeDef HAL_SAI_Transmit_DMA(SAI_HandleTypeDef *hsai, uint8_t *pData, uint16_t Size)
 {
-  uint32_t tickstart = HAL_GetTick();
-
-  if ((pData == NULL) || (Size == 0U))
+  if
+  ((pData == NULL) || (Size == 0))
   {
-    return  HAL_ERROR;
+    return
+    HAL_ERROR;
   }
-
-  if (hsai->State == HAL_SAI_STATE_READY)
+  if
+  (hsai->State == HAL_SAI_STATE_READY)
   {
     /* Process Locked */
     __HAL_LOCK(hsai);
-
     hsai->pBuffPtr = pData;
     hsai->XferSize = Size;
     hsai->XferCount = Size;
     hsai->ErrorCode = HAL_SAI_ERROR_NONE;
     hsai->State = HAL_SAI_STATE_BUSY_TX;
-
     /* Set the SAI Tx DMA Half transfer complete callback */
     hsai->hdmatx->XferHalfCpltCallback = SAI_DMATxHalfCplt;
-
     /* Set the SAI TxDMA transfer complete callback */
     hsai->hdmatx->XferCpltCallback = SAI_DMATxCplt;
-
     /* Set the DMA error callback */
     hsai->hdmatx->XferErrorCallback = SAI_DMAError;
-
     /* Set the DMA Tx abort callback */
     hsai->hdmatx->XferAbortCallback = NULL;
-
     /* Enable the Tx DMA Stream */
-    if (HAL_DMA_Start_IT(hsai->hdmatx, (uint32_t)hsai->pBuffPtr, (uint32_t)&hsai->Instance->DR, hsai->XferSize) != HAL_OK)
+    if
+    (HAL_DMA_Start_IT(hsai->hdmatx, (uint32_t)hsai->pBuffPtr, (uint32_t)&hsai->Instance->DR, hsai->XferSize) != HAL_OK)
     {
       __HAL_UNLOCK(hsai);
-      return  HAL_ERROR;
+      return
+      HAL_ERROR;
     }
-
     /* Enable the interrupts for error handling */
     __HAL_SAI_ENABLE_IT(hsai, SAI_InterruptFlag(hsai, SAI_MODE_DMA));
-
+    // Following RM0351 Rev 4 pg 1329:
+    // 1) Write into the SAI_xDR (by software or by DMA). (We use DMA as this is the HAL_SAI_Transmit_DMA function)
     /* Enable SAI Tx DMA Request */
     hsai->Instance->CR1 |= SAI_xCR1_DMAEN;
-
-    /* Wait until FIFO is not empty */
-    while ((hsai->Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_EMPTY)
-    {
-      /* Check for the Timeout */
-      if ((HAL_GetTick() - tickstart) > SAI_LONG_TIMEOUT)
-      {
-        /* Update error code */
-        hsai->ErrorCode |= HAL_SAI_ERROR_TIMEOUT;
-
-        /* Process Unlocked */
-        __HAL_UNLOCK(hsai);
-
-        return HAL_TIMEOUT;
-      }
-    }
-
+    // 2) Wait until the FIFO threshold (FLH) flag is different from 000b (FIFO empty).
+    // Don't wait for it to be e.g full as SAI might only generate DMA requests up until the FIFO is partially
+    // full according to the FTH FifoTHreshold bits
+    // while
+    // ((hsai->Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_EMPTY){}
+    // 3) Enable the audio block in slave transmitter mode.
     /* Check if the SAI is already enabled */
-    if ((hsai->Instance->CR1 & SAI_xCR1_SAIEN) == 0U)
+    if
+    ((hsai->Instance->CR1 & SAI_xCR1_SAIEN) == RESET)
     {
       /* Enable SAI peripheral */
       __HAL_SAI_ENABLE(hsai);
     }
-
     /* Process Unlocked */
     __HAL_UNLOCK(hsai);
-
-    return HAL_OK;
+    return
+    HAL_OK;
   }
   else
   {
-    return HAL_BUSY;
+    return
+    HAL_BUSY;
   }
 }
 

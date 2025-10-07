@@ -7,6 +7,6 @@ C:\ST\STM32CubeCLT_1.19.0\CMake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_M
 -- Check for working C compiler: C:/ST/STM32CubeCLT_1.19.0/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (0.7s)
+-- Configuring done (0.8s)
 -- Generating done (0.0s)
 -- Build files have been written to: C:/Users/Миша/CLionProjects/st32_template/cmake-build-debug-arm-none-eabi-gcc

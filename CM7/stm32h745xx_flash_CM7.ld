@@ -230,6 +230,10 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+    .resources :
+    {
+      KEEP(*(.resources*))    /* Всё, что имеет секцию .resources*, останется в прошивке */
+    } >FLASH
 }
 
 
