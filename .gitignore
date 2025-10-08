@@ -1,0 +1,36 @@
+# ignore all
+*  
+  
+# not ignore directories
+!/**/
+    
+# not ignore .gitignore
+!.gitignore
+!.gitmodules
+
+
+*.exe
+#C, C++
+!*.c
+!*.h
+!*.cpp
+!*.hpp
+
+#cmake
+!CMakelists.txt
+!*.cmake
+  
+
+
+#jenkins
+!*.jenkins
+#libs
+!*.a
+!*.dll
+
+
+!*.md
+
+
+*cmake-build-debug-arm-none-eabi-gcc
+*cmake-build-release-arm-none-eabi-gcc

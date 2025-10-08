@@ -140,7 +140,6 @@ int main(void)
 
   Audio_Drv->Play(Audio_CompObj);
 
-  GenerateTone();
 
   // включаем SAI
   __HAL_SAI_ENABLE(&SaiOutputHandle);
