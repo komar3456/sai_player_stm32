@@ -46,7 +46,7 @@ add_executable(SAI_CM7
 
 )
 
-target_sources(SAI_CM7 PRIVATE CM7/Src/song_30_raw.o)
+target_sources(SAI_CM7 PRIVATE CM7/Src/FRIENDLY_THUG_52_NGG_Sold_Out.o)
 
 set(PDM_LIB ${CMAKE_SOURCE_DIR}/CM7/Lib/libPDMFilter_CM7_GCC_wc32.a)
 # Компиляция только своих флагов, тулчейн уже добавляет остальное
@@ -70,6 +70,7 @@ target_link_options(SAI_CM7 PRIVATE
         -Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/SAI_CM7.map
         -Wl,--gc-sections
         -specs=nano.specs
+
 )
 
 # Post-build: .bin
