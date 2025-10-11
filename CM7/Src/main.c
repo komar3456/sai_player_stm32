@@ -116,16 +116,16 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 
   hsai->Instance->DR = audioPcmBuf[bufIndex];
 }
-# define  SAMPLE_RATE  16000
+# define  SAMPLE_RATE  44100
 # define FREQ  200
 # define AMPLITUDE   30000
 
-int16_t buffer_hz[SAMPLE_RATE / FREQ];
+int32_t buffer_hz[SAMPLE_RATE / FREQ];
 
 void generate_sine(void) {
   for (int i = 0; i < SAMPLE_RATE / FREQ; i++) {
     double t = (double)i / SAMPLE_RATE;
-    buffer_hz[i] = (int16_t)(AMPLITUDE * sin(2.0 * M_PI * FREQ * t));
+    buffer_hz[i] = (int32_t)(AMPLITUDE * sin(2.0 * M_PI * FREQ * t));
   }
 }
 /**
@@ -140,11 +140,11 @@ int main(void)
   SystemClock_Config();
   Playback_Init();
   WM8994_Init_t codec_init;
-  codec_init.Resolution   = WM8994_RESOLUTION_16b;
-  codec_init.Frequency    = WM8994_FREQUENCY_16K;
+  codec_init.Resolution   = WM8994_RESOLUTION_24b;
+  codec_init.Frequency    = WM8994_FREQUENCY_44K;
   codec_init.InputDevice  = WM8994_IN_NONE;
   codec_init.OutputDevice = AUDIO_OUT_DEVICE_HEADPHONE;
-  codec_init.Volume       = VOLUME_OUT_CONVERT(100);
+  codec_init.Volume       = VOLUME_OUT_CONVERT(80);
   generate_sine();
   if (Audio_Drv->Init(Audio_CompObj, &codec_init) != 0)
     Error_Handler();
@@ -160,11 +160,12 @@ int main(void)
      // одна "периодическая волна"
 
 
-    for (size_t i = 0; i < 960000; i += 2) // по два сэмпла: L + R
+    for (size_t i = 0; i < SAMPLE_RATE / FREQ; i += 1) // по два сэмпла: L + R
     {
-      int16_t  amp =   audio_data[i] | audio_data[i+ 1] << 8 ;
-      while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_1QUARTERFULL);
-      SaiOutputHandle.Instance->DR = amp;
+      int32_t  amp =   audio_data[i] | audio_data[i+ 1] << 8 |audio_data[i + 2] << 16;
+      while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_3QUARTERFULL);
+      SaiOutputHandle.Instance->DR = buffer_hz[i];
+      SaiOutputHandle.Instance->DR = buffer_hz[i];
       // SaiOutputHandle.Instance->DR = amp;
     }
   }
@@ -293,15 +294,15 @@ static void Playback_Init(void)
   SaiOutputHandle.Init.Synchro        = SAI_ASYNCHRONOUS;
   SaiOutputHandle.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
   SaiOutputHandle.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
-  SaiOutputHandle.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
-  SaiOutputHandle.Init.AudioFrequency = AUDIO_FREQUENCY;
+  SaiOutputHandle.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_3QF;
+  SaiOutputHandle.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_44K;
   SaiOutputHandle.Init.Protocol       = SAI_FREE_PROTOCOL;
-  SaiOutputHandle.Init.DataSize       = SAI_DATASIZE_16;
+  SaiOutputHandle.Init.DataSize       = SAI_DATASIZE_24;
   SaiOutputHandle.Init.FirstBit       = SAI_FIRSTBIT_MSB;
   SaiOutputHandle.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
 
-  SaiOutputHandle.FrameInit.FrameLength       = 128;
-  SaiOutputHandle.FrameInit.ActiveFrameLength = 64;
+  SaiOutputHandle.FrameInit.FrameLength       = 192;
+  SaiOutputHandle.FrameInit.ActiveFrameLength = 96;
   SaiOutputHandle.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
   SaiOutputHandle.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
   SaiOutputHandle.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
