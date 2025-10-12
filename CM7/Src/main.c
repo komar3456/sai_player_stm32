@@ -40,7 +40,7 @@ extern const uint8_t _binary_FRIENDLY_THUG_52_NGG_Sold_Out_raw_end;
 const uint8_t *audio_data = &_binary_FRIENDLY_THUG_52_NGG_Sold_Out_raw_start;
 
 /* Private define ------------------------------------------------------------*/
-#define AUDIO_FREQUENCY       SAI_AUDIO_FREQUENCY_16K
+#define AUDIO_FREQUENCY       SAI_AUDIO_FREQUENCY_44K
 #define AUDIO_CHANNEL_NUMBER  2U
 #define AUDIO_BUFFER_SIZE     256U
 #define AUDIO_PCM_CHUNK_SIZE  32U
@@ -160,12 +160,12 @@ int main(void)
      // одна "периодическая волна"
 
 
-    for (size_t i = 0; i < SAMPLE_RATE / FREQ; i += 1) // по два сэмпла: L + R
+    for (size_t i = 0; i < 793800; i += 3) // по два сэмпла: L + R
     {
       int32_t  amp =   audio_data[i] | audio_data[i+ 1] << 8 |audio_data[i + 2] << 16;
       while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_3QUARTERFULL);
-      SaiOutputHandle.Instance->DR = buffer_hz[i];
-      SaiOutputHandle.Instance->DR = buffer_hz[i];
+      SaiOutputHandle.Instance->DR = amp;
+      // SaiOutputHandle.Instance->DR = buffer_hz[i];
       // SaiOutputHandle.Instance->DR = amp;
     }
   }
@@ -262,16 +262,18 @@ static void Playback_Init(void)
 
   /* Configure PLLSAI1 prescalers */
   /* PLLSAI_VCO: VCO_512M
-     SAI_CLK(first level) = PLLSAI_VCO/PLLSAIP = 512/125 = 4.096 Mhz */
+     SAI_CLK(first level) = PLLSAI_VCO/PLLSAIP = 512/125 = 11,28959 Mhz */
+  //11,28959 custom freq = 11,28959/256 = 0,044099 = 44100khz
   RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI2;
   RCC_PeriphCLKInitStruct.Sai23ClockSelection = RCC_SAI2CLKSOURCE_PLL2;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 125;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 1;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 1;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 512;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2P = 85;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2Q = 20;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2R = 20;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2N = 499;
   RCC_PeriphCLKInitStruct.PLL2.PLL2FRACN = 0;
-  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 25;
-
+  RCC_PeriphCLKInitStruct.PLL2.PLL2M = 13;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
+  RCC_PeriphCLKInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
   if(HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -301,16 +303,16 @@ static void Playback_Init(void)
   SaiOutputHandle.Init.FirstBit       = SAI_FIRSTBIT_MSB;
   SaiOutputHandle.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
 
-  SaiOutputHandle.FrameInit.FrameLength       = 192;
-  SaiOutputHandle.FrameInit.ActiveFrameLength = 96;
+  SaiOutputHandle.FrameInit.FrameLength       = 64;
+  SaiOutputHandle.FrameInit.ActiveFrameLength = 64;
   SaiOutputHandle.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
   SaiOutputHandle.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
   SaiOutputHandle.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
 
   SaiOutputHandle.SlotInit.FirstBitOffset = 0;
   SaiOutputHandle.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
-  SaiOutputHandle.SlotInit.SlotNumber     = 4;
-  SaiOutputHandle.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_2);
+  SaiOutputHandle.SlotInit.SlotNumber     = 2;
+  SaiOutputHandle.SlotInit.SlotActive     = (SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1);
 
   /* DeInit SAI PCM input */
   HAL_SAI_DeInit(&SaiOutputHandle);
