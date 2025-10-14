@@ -42,7 +42,7 @@ const uint8_t *audio_data = &_binary_FRIENDLY_THUG_52_NGG_Sold_Out_raw_start;
 /* Private define ------------------------------------------------------------*/
 #define AUDIO_FREQUENCY       SAI_AUDIO_FREQUENCY_44K
 #define AUDIO_CHANNEL_NUMBER  2U
-#define AUDIO_BUFFER_SIZE     256U
+#define AUDIO_BUFFER_SIZE     64U
 #define AUDIO_PCM_CHUNK_SIZE  32U
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,7 +53,7 @@ const uint8_t *audio_data = &_binary_FRIENDLY_THUG_52_NGG_Sold_Out_raw_start;
 
 /* SAI input Handle */
 SAI_HandleTypeDef  SaiInputHandle;
-
+int32_t song_buffer[AUDIO_BUFFER_SIZE];
 /* SAI output Handle */
 SAI_HandleTypeDef  SaiOutputHandle;
 static int32_t WM8994_Probe(void);
@@ -107,14 +107,26 @@ void GenerateTone(void)
 
 /* Private functions ---------------------------------------------------------*/
 volatile uint32_t bufIndex = 0;
-
+int song_index = AUDIO_BUFFER_SIZE / 2;
+int current_song_index = 0;
+void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+  song_index += 64;
+  int j = 0;
+  for ( uint32_t i = 0;i < 32 ;i++) {
+    int32_t  amp =   audio_data[song_index + j] | audio_data[song_index+ 1 + j] << 8 | audio_data[song_index + 2 + j ] << 16;
+    song_buffer[i] = amp;
+    j +=3;
+  }
+}
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
-
-  bufIndex++;
-  if(bufIndex >= AUDIO_BUFFER_SIZE) bufIndex = 0;
-
-  hsai->Instance->DR = audioPcmBuf[bufIndex];
+  song_index += 64;
+  int j = 0;
+  for ( uint32_t i = 32;i < 64 ;i++) {
+    int32_t  amp =   audio_data[song_index + j] | audio_data[song_index+ 1 + j] << 8 | audio_data[song_index + 2 + j ] << 16;
+    song_buffer[i] = amp;
+    j +=3;
+  }
 }
 # define  SAMPLE_RATE  44100
 # define FREQ  200
@@ -145,11 +157,20 @@ int main(void)
   codec_init.InputDevice  = WM8994_IN_NONE;
   codec_init.OutputDevice = AUDIO_OUT_DEVICE_HEADPHONE;
   codec_init.Volume       = VOLUME_OUT_CONVERT(80);
-  generate_sine();
   if (Audio_Drv->Init(Audio_CompObj, &codec_init) != 0)
     Error_Handler();
-
+  int j;
+  for ( uint32_t i = 0;i < 64 ;i++) {
+    int32_t  amp =   audio_data[song_index + j] | audio_data[song_index+ 1 + j] << 8 | audio_data[song_index + 2 + j ] << 16;
+    song_buffer[i] = amp;
+    j +=3;
+  }
   Audio_Drv->Play(Audio_CompObj);
+
+  if(HAL_OK != HAL_SAI_Transmit_DMA(&SaiOutputHandle, (uint32_t *)song_buffer, AUDIO_BUFFER_SIZE))
+  {
+    Error_Handler();
+  }
 
 
   // включаем SAI
@@ -163,8 +184,8 @@ int main(void)
     for (size_t i = 0; i < 793800; i += 3) // по два сэмпла: L + R
     {
       int32_t  amp =   audio_data[i] | audio_data[i+ 1] << 8 |audio_data[i + 2] << 16;
-      while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_3QUARTERFULL);
-      SaiOutputHandle.Instance->DR = amp;
+      // while ((SaiOutputHandle.Instance->SR & SAI_xSR_FLVL) == SAI_FIFOSTATUS_3QUARTERFULL);
+      // SaiOutputHandle.Instance->DR = amp;
       // SaiOutputHandle.Instance->DR = buffer_hz[i];
       // SaiOutputHandle.Instance->DR = amp;
     }
@@ -326,7 +347,6 @@ static void Playback_Init(void)
   WM8994_Probe();
 
   /* Init PDM Filters */
-  AUDIO_IN_PDMToPCM_Init(AUDIO_FREQUENCY, AUDIO_CHANNEL_NUMBER);
 }
 /**
   * @brief  Register Bus IOs if component ID is OK
@@ -469,6 +489,7 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
    */
   bufferStatus |= BUFFER_OFFSET_HALF;
 }
+
 
 /**
 * @brief  CPU L1-Cache enable.

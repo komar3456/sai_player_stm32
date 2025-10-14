@@ -82,8 +82,8 @@ void Error_Handler(void);
 #define AUDIO_OUT_SAIx_DMAx_STREAM               DMA2_Stream1
 #define AUDIO_OUT_SAIx_DMAx_REQUEST              DMA_REQUEST_SAI2_A
 #define AUDIO_OUT_SAIx_DMAx_IRQ                  DMA2_Stream1_IRQn
-#define AUDIO_OUT_SAIx_DMAx_PERIPH_DATA_SIZE     DMA_PDATAALIGN_HALFWORD
-#define AUDIO_OUT_SAIx_DMAx_MEM_DATA_SIZE        DMA_MDATAALIGN_HALFWORD
+#define AUDIO_OUT_SAIx_DMAx_PERIPH_DATA_SIZE     DMA_MDATAALIGN_WORD
+#define AUDIO_OUT_SAIx_DMAx_MEM_DATA_SIZE        DMA_MDATAALIGN_WORD
 #define AUDIO_OUT_SAIx_DMAx_IRQHandler           DMA2_Stream1_IRQHandler
 
 /* Select the interrupt preemption priority and subpriority for the DMA interrupt */
