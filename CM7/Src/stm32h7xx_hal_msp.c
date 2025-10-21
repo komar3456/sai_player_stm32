@@ -142,7 +142,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef *hsai)
     SaiOutputDmaHandle.Init.Mode                = DMA_CIRCULAR;
     SaiOutputDmaHandle.Init.Priority            = DMA_PRIORITY_HIGH;
     SaiOutputDmaHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-    SaiOutputDmaHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    SaiOutputDmaHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_3QUARTERSFULL;
     SaiOutputDmaHandle.Init.MemBurst            = DMA_MBURST_SINGLE;
     SaiOutputDmaHandle.Init.PeriphBurst         = DMA_PBURST_SINGLE;
 
